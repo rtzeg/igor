@@ -5,7 +5,7 @@
   "tsx": true,
   "tailwind": {
     "config": "",
-    "css": "src/styles.css",
+    "css": "src/shared/styles/global.css",
     "baseColor": "neutral",
     "cssVariables": true,
     "prefix": ""
@@ -13,9 +13,9 @@
   "iconLibrary": "lucide",
   "aliases": {
     "components": "@/shared/shadcn-ui",
-    "utils": "@/lib/utils",
+    "utils": "@/shared/lib/utils",
     "ui": "@/shared/shadcn-ui",
-    "lib": "@/lib",
+    "lib": "@/shared/lib",
     "hooks": "@/shared/hooks"
   },
   "registries": {}

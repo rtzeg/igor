@@ -1,20 +1,9 @@
-# Определение compose-файла: make dev <command> или make <command>
-ifeq ($(firstword $(MAKECMDGOALS)),dev)
-  COMPOSE_FILE := -f docker-compose.dev.yml
-  ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
-  $(eval $(ARGS):;@:)
-else
-  COMPOSE_FILE :=
-endif
+DC := docker compose
 
-DC := docker compose $(COMPOSE_FILE)
-
-.PHONY: dev up down build logs restart bash clean
-
-dev: ;
+.PHONY: up down build logs restart bash clean install start lint format check test preview env
 
 # ==========================================
-# Compose
+# Docker (сборка и деплой)
 # ==========================================
 up:
 	$(DC) up -d --build
@@ -34,14 +23,11 @@ logs:
 restart:
 	$(DC) restart
 
-# ==========================================
-# Контейнер
-# ==========================================
 bash:
 	$(DC) exec frontend sh
 
 # ==========================================
-# Разработка (без Docker)
+# Локальная разработка
 # ==========================================
 install:
 	npm ci

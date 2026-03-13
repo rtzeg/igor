@@ -1,16 +1,13 @@
 /**
  * Runtime environment variables.
  *
- * В Docker env vars инжектируются через env-config.js (window.__ENV__)
- * при старте контейнера, без пересборки приложения.
+ * Variables are read from import.meta.env (Vite .env files).
+ * In production, VITE_* vars are baked in at build time.
  *
- * В dev-режиме используются переменные из import.meta.env (файл .env).
- *
- * Чтобы добавить новую переменную:
- * 1. Добавьте в .env.example
- * 2. Добавьте в scripts/env.sh
- * 3. Добавьте в interface EnvConfig ниже
- * 4. Добавьте в объект env ниже
+ * To add a new variable:
+ * 1. Add to .env.example
+ * 2. Add to interface EnvConfig below
+ * 3. Add to the env object below
  */
 
 interface EnvConfig {
@@ -19,25 +16,10 @@ interface EnvConfig {
   VITE_DEFAULT_LOCALE: string
 }
 
-declare global {
-  interface Window {
-    __ENV__?: Partial<EnvConfig>
-  }
-}
-
 const env: EnvConfig = {
-  VITE_API_BASE_URL:
-    window.__ENV__?.VITE_API_BASE_URL ||
-    import.meta.env.VITE_API_BASE_URL ||
-    'http://localhost:8000',
-  VITE_APP_NAME:
-    window.__ENV__?.VITE_APP_NAME ||
-    import.meta.env.VITE_APP_NAME ||
-    'MyApp',
-  VITE_DEFAULT_LOCALE:
-    window.__ENV__?.VITE_DEFAULT_LOCALE ||
-    import.meta.env.VITE_DEFAULT_LOCALE ||
-    'ru',
+  VITE_API_BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000',
+  VITE_APP_NAME: import.meta.env.VITE_APP_NAME || 'MyApp',
+  VITE_DEFAULT_LOCALE: import.meta.env.VITE_DEFAULT_LOCALE || 'ru',
 }
 
 export function getEnv<K extends keyof EnvConfig>(key: K): EnvConfig[K] {

@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from '@tanstack/react-router'
-import LanguageSwitcher from '@/features/LanguageSwitcher'
+import { LanguageSwitcher } from '@/features/language-switcher'
 
 export default function HomePage() {
   const { t } = useTranslation()

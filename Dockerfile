@@ -1,7 +1,7 @@
 # ============================================
 # Stage 1: Install dependencies
 # ============================================
-FROM node:22-alpine AS deps
+FROM node:24-alpine AS deps
 
 WORKDIR /app
 
@@ -34,11 +34,6 @@ COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 # Копируем собранное приложение
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Копируем скрипт для инъекции env-переменных
-COPY scripts/env.sh /docker-entrypoint.d/40-env-config.sh
-RUN chmod +x /docker-entrypoint.d/40-env-config.sh
-
 EXPOSE 80
 
-# nginx:alpine образ автоматически запускает скрипты из /docker-entrypoint.d/
 CMD ["nginx", "-g", "daemon off;"]

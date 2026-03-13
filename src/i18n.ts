@@ -1,9 +1,9 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
-import ru from './locales/ru.json'
-import en from './locales/en.json'
-import uz from './locales/uz.json'
+import ru from '@/shared/locales/ru.json'
+import en from '@/shared/locales/en.json'
+import uz from '@/shared/locales/uz.json'
 
 const selectedLanguage = localStorage.getItem('i18nextLng') || 'ru'
 
