@@ -1,0 +1,12 @@
+node_modules
+dist
+build
+.git
+.github
+.vscode
+.devcontainer
+claude.examples
+*.md
+.env
+.env.local
+.env.*.local

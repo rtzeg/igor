@@ -1,0 +1,32 @@
+name: CI/CD
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Deploy environment'
+        required: true
+        type: choice
+        options:
+          - dev
+          - prod
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .env
+        run: |
+          if [ "${{ github.event.inputs.environment }}" = "prod" ]; then
+            echo "${{ secrets.PROD_ENV }}" > .env
+          else
+            echo "${{ secrets.DEV_ENV }}" > .env
+          fi
+
+      - name: Build & Deploy
+        run: |
+          docker compose down
+          docker compose up --build -d
